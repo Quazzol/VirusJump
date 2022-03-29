@@ -9,24 +9,19 @@ namespace Cell
     public class CellManager : MonoBehaviour
     {
         public event Action<int> CellInfected;
+        public float InfectionPercent => _activeCell == null ? 0 : _activeCell.InfectionPercent;
+        public float BlowPercent => _activeCell == null ? 0 : _activeCell.BlowPercent;
 
         private List<CellController> _cells = new List<CellController>();
-        private Camera _mainCamera;
         private Transform _transform;
         private readonly int _activeCellCount = 7;
-        private float _followDistance;
+        private CellController _activeCell;
 
         private void Awake()
         {
             _transform = transform;
-            _mainCamera = Camera.main;
-            _followDistance = _mainCamera.transform.position.y - _transform.position.y;
+            CellController.Activated += OnCellActivated;
             CellController.Infected += OnCellInfected;
-        }
-
-        private void Update()
-        {
-            _transform.position = _mainCamera.transform.position + Vector3.down * _followDistance;
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -40,6 +35,7 @@ namespace Cell
 
         public void StartGame()
         {
+            DeactivateExistingCells();
             InitializeCells();
         }
 
@@ -53,18 +49,20 @@ namespace Cell
 
         private void InitializeCell(int cellIndex)
         {
-            CellController cell = null;
-            if (cellIndex == 0)
-            {
-                cell = CellFactory.GetCell(0);
-            }
-            else
-            {
-                cell = CellFactory.GetRandomCell();
-            }
-
+            var cell = CellFactory.GetCell(CalculateCellDifficulty(cellIndex));
             cell.Initialize(cellIndex, GetCellPositionByIndex(cellIndex));
             _cells.Add(cell);
+        }
+
+        private int CalculateCellDifficulty(int cellIndex)
+        {
+            if (cellIndex == 0)
+                return 0;
+
+            var difficulty = (cellIndex / 4) + 1;
+            difficulty += (Random.value > .3f ? 1 : 0);
+            difficulty += (Random.value > .3f ? -1 : 0);
+            return difficulty;
         }
 
         private Vector2 GetCellPositionByIndex(int cellIndex)
@@ -81,6 +79,18 @@ namespace Cell
             if (cell == null)
                 return null;
             return _cells[cell.CellIndex + 1];
+        }
+
+        private void DeactivateExistingCells()
+        {
+            foreach (var cell in _cells)
+                cell.Disable();
+            _cells.Clear();
+        }
+
+        private void OnCellActivated(CellController cell)
+        {
+            _activeCell = cell;
         }
 
         private void OnCellInfected(CellController cell)

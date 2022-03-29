@@ -1,4 +1,5 @@
 using UnityEngine;
+using Virus;
 
 namespace Cell
 {
@@ -7,7 +8,8 @@ namespace Cell
         public int CellIndex { get; private set; }
         public float RotationAnglePerSecond { get; private set; }
         public float InfectionPeriod { get; private set; }
-        public Rigidbody2D Virus { get; private set; }
+        public VirusController Virus { get; private set; }
+        public Rigidbody2D VirusBody { get; private set; }
         private readonly float _baseRotationAngle = 30f;
         private readonly float _baseInfectionPeriod = 2f;
 
@@ -19,9 +21,10 @@ namespace Cell
             InfectionPeriod = (1 + CellIndex * .1f) * _baseInfectionPeriod;
         }
 
-        public void SetVirus(Rigidbody2D virus)
+        public void SetVirus(VirusController virus)
         {
             Virus = virus;
+            VirusBody = virus == null ? null : virus.GetComponent<Rigidbody2D>();
         }
     }
 }

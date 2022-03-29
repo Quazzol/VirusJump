@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5453817877925050037}
   - component: {fileID: 5453817877925050038}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 5453817877990697794}
   - component: {fileID: 5453817877990697795}
   - component: {fileID: 3782798665314653669}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Anticore
   m_TagString: Untagged
   m_Icon: {fileID: 0}

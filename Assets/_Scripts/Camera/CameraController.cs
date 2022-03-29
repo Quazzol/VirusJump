@@ -24,9 +24,12 @@ namespace Manager
             _virus = virus;
         }
 
-        public void StopMotion()
+        public void StopFollow()
         {
             _virus = null;
+            _mainCamera.transform.position = new Vector3(_mainCamera.transform.position.x,
+                                                            -_yOffset,
+                                                            _mainCamera.transform.position.z);
         }
 
         private void FollowVirus()

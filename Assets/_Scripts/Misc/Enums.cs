@@ -4,6 +4,14 @@ namespace Misc
     {
         Normal,
         Infecting,
-        Infected
+        Infected,
+        Blown
+    }
+
+    public enum GameState
+    {
+        Ready,
+        Playing,
+        Stopped
     }
 }

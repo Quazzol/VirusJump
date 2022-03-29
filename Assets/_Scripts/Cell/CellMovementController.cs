@@ -18,7 +18,7 @@ namespace Cell
 
             Vector2 direction = _rigidbody.position - virus.position;
 
-            float forceOfMagnitude = (_rigidbody.mass * virus.mass) / Mathf.Pow(direction.magnitude, 2);
+            float forceOfMagnitude = (_rigidbody.mass * virus.mass);
             Vector2 force = direction.normalized * forceOfMagnitude;
 
             virus.AddForce(force);

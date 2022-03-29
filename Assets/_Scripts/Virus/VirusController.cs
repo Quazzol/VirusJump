@@ -48,6 +48,8 @@ namespace Virus
 
         public void Kill()
         {
+            _data.CurrentCell?.Detach();
+            _data.CurrentCell = null;
             _animation.Dissolve();
         }
 

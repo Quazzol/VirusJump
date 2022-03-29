@@ -96,7 +96,7 @@ namespace Virus
 
             var direction = nextCell.transform.position - _transform.position;
 
-            return Physics2D.CircleCastNonAlloc(_transform.position, _data.Radius, direction.normalized, _hitResults, direction.magnitude) <= 2;
+            return Physics2D.CircleCastNonAlloc(_transform.position, _data.Radius, direction.normalized, _hitResults, direction.magnitude, _data.CellLayerMask) <= 1;
         }
 
         private void Run()

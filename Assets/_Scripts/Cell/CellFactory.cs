@@ -21,12 +21,13 @@ namespace Cell
 
         public static CellController GetRandomCell()
         {
-            return _cellPrefabs[Random.Range(0, _cellPrefabs.Count)].Get<CellController>();
+            return _cellPrefabs[Random.Range(0, _cellPrefabs.Count)].Get<CellController>(null, true);
         }
 
         public static CellController GetCell(int difficulty)
         {
-            return _cellPrefabs[difficulty].Get<CellController>();
+            difficulty = Mathf.Clamp(difficulty, 0, _cellPrefabs.Count - 1);
+            return _cellPrefabs[difficulty].Get<CellController>(null, true);
         }
     }
 }
